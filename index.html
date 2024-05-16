@@ -7,16 +7,18 @@
     <style>
         body {
             font-family: sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            display: flex;
+            height: 100vh;
         }
 
         .input-group {
             margin-bottom: 15px;
+            flex: 1; /* Распределение пространства внутри .container */
         }
 
         .input-group label {
@@ -38,6 +40,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            width: 100%;
         }
 
         .response {
@@ -46,27 +49,28 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             white-space: pre-wrap;
+            flex: 1; /* Распределение пространства внутри .container */
+            overflow-y: auto; /* Добавление вертикальной прокрутки, если контент не помещается */
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>Тестовое задание GREEN-API</h1>
+    <div style="flex: 1;">
+        <div class="input-group">
+            <label for="idInstance">idInstance:</label>
+            <input type="text" id="idInstance" name="idInstance">
+        </div>
 
-    <div class="input-group">
-        <label for="idInstance">idInstance:</label>
-        <input type="text" id="idInstance" name="idInstance">
+        <div class="input-group">
+            <label for="apiTokenInstance">ApiTokenInstance:</label>
+            <input type="text" id="apiTokenInstance" name="apiTokenInstance">
+        </div>
+
+        <button class="button" onclick="getSettings()">getSettings</button>
+        <button class="button" onclick="getStateInstance()">getStateInstance</button>
+        <button class="button" onclick="sendMessage()">sendMessage</button>
     </div>
-
-    <div class="input-group">
-        <label for="apiTokenInstance">ApiTokenInstance:</label>
-        <input type="text" id="apiTokenInstance" name="apiTokenInstance">
-    </div>
-
-    <button class="button" onclick="getSettings()">getSettings</button>
-    <button class="button" onclick="getStateInstance()">getStateInstance</button>
-    <button class="button" onclick="sendMessage()">sendMessage</button>
-
     <div class="response" id="response"></div>
 </div>
 <script>
