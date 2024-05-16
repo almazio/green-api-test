@@ -60,7 +60,7 @@
             overflow-y: auto; /* Добавление вертикальной прокрутки, если контент не помещается */
         }
         .space {
-            height: 80px;
+            height: 20px;
         }
     </style>
 </head>
@@ -68,19 +68,19 @@
 <div class="container">
     <div style="flex: 1;" class="forms">
         <div class="input-group">
-            <label for="idInstance">idInstance:</label>
+            <label for="idInstance">Идентификатор:</label>
             <input type="text" id="idInstance" name="idInstance">
         </div>
 
         <div class="input-group">
-            <label for="apiTokenInstance">ApiTokenInstance:</label>
+            <label for="apiTokenInstance">Токен:</label>
             <input type="text" id="apiTokenInstance" name="apiTokenInstance">
         </div>
 
         <button class="button" onclick="getSettings()">Получить параметры</button>
         <div class="space"></div>
         <button class="button" onclick="getStateInstance()">Получить состояние</button>
-
+        <div class="space"></div>
         
         <div class="input-group">
             <label for="phoneNumber">Номер телефона:</label>
@@ -94,7 +94,7 @@
         
         
         <button class="button" onclick="sendMessagePhone()">Отправить сообщение</button>
-
+        <div class="space"></div>
             <div class="input-group">
             <label for="phoneUrl">Номер телефоеа:</label>
             <input type="tel" id="phoneUrl" name="phoneUrl">
