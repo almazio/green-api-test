@@ -4,59 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тестовое задание GREEN-API</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Тестовое задание GREEN-API</h1>
+<div class="container">
+    <h1>Тестовое задание GREEN-API</h1>
 
-        <div class="input-group">
-            <label for="idInstance">idInstance:</label>
-            <input type="text" id="idInstance" name="idInstance">
-        </div>
-
-        <div class="input-group">
-            <label for="apiTokenInstance">ApiTokenInstance:</label>
-            <input type="text" id="apiTokenInstance" name="apiTokenInstance">
-        </div>
-
-        <button class="button" onclick="getSettings()">getSettings</button>
-        <button class="button" onclick="getStateInstance()">getStateInstance</button>
-        <button class="button" onclick="sendMessage()">sendMessage</button>
-        <button class="button" onclick="sendFileByUrl()">sendFileByUrl</button>
-
-        <div class="response" id="response"></div>
+    <div class="input-group">
+        <label for="idInstance">idInstance:</label>
+        <input type="text" id="idInstance" name="idInstance">
     </div>
 
-    <script>
-        function getSettings() {
-            const idInstance = document.getElementById('idInstance').value;
-            const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+    <div class="input-group">
+        <label for="apiTokenInstance">ApiTokenInstance:</label>
+        <input type="text" id="apiTokenInstance" name="apiTokenInstance">
+    </div>
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-                    document.getElementById('response').textContent = JSON.stringify(response, null, 2);
-                } else {
-                    document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
-                }
-            };
-            xhr.send();
-        }
+    <button class="button" onclick="getSettings()">getSettings</button>
+    <button class="button" onclick="getStateInstance()">getStateInstance</button>
+    <button class="button" onclick="sendMessage()">sendMessage</button>
+    <button class="button" onclick="sendFileByUrl()">sendFileByUrl</button>
 
-        function getStateInstance() {
-            // Аналогично getSettings
-        }
+    <div class="response" id="response"></div>
+</div>
 
-        function sendMessage() {
-            // Аналогично getSettings, но с POST-запросом и передачей данных в теле запроса
-        }
+<script>
+    function getSettings() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
-        function sendFileByUrl() {
-            // Здесь можно добавить логику для отправки файла по URL
-            document.getElementById('response').textContent = 'Метод sendFileByUrl пока не реализован';
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `https://api.green-api.com/v3/instances/<span class="math-inline">\{idInstance\}/settings?api\_token\=</span>{apiTokenInstance}`);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+            } else {
+                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+            }
+        };
+        xhr.send();
+    }
+
+    function getStateInstance() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `https://api.green-api.com/v3/instances/<span class="math-inline">\{idInstance\}/state?api\_token\=</span>{apiTokenInstance}`);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+            } else {
+                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+            }
+        };
+        xhr.send();
+    }
+
+function sendMessage() {
+    const idInstance = document.getElementById('idInstance').value;
+    const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+    const recipient = '77771234567'; // номер получателя
+    const message = 'Hello World!'; // текст сообщения
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `https://api.green-api.com/v3/instances/${idInstance}/sendMessage`);
+    xhr.setRequestHeader('Authorization', `Bearer ${apiTokenInstance}`);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+        } else {
+            document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
         }
-    </script>
-</body>
-</html>
+    };
+
+    const data = JSON.stringify({
+        recipient: recipient,
+        message: message
+    });
+
+    xhr.send(data);
+}
+
+        
