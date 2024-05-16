@@ -75,8 +75,7 @@
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy
-/idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
+        xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
@@ -93,8 +92,7 @@
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy
-/getStateInstance?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
+        xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy/getStateInstance?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
@@ -113,9 +111,9 @@
         const message = 'Hello World!'; // текст сообщения
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy
-/sendMessage`);
+        xhr.open('POST', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy/sendMessage?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
         xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', `Bearer ${apiTokenInstance}`);
 
         xhr.onload = function() {
             if (xhr.status === 200) {
@@ -127,8 +125,6 @@
         };
 
         const data = JSON.stringify({
-            idInstance: idInstance,
-            apiTokenInstance: apiTokenInstance,
             recipient: recipient,
             message: message
         });
