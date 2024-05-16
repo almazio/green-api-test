@@ -76,7 +76,7 @@
 
         const xhr = new XMLHttpRequest();
         xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy
-/getSettings?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
+/idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
