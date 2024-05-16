@@ -66,7 +66,6 @@
     <button class="button" onclick="getSettings()">getSettings</button>
     <button class="button" onclick="getStateInstance()">getStateInstance</button>
     <button class="button" onclick="sendMessage()">sendMessage</button>
-    <button class="button" onclick="sendFileByUrl()">sendFileByUrl</button>
 
     <div class="response" id="response"></div>
 </div>
@@ -76,7 +75,8 @@
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `https://api.green-api.com/v3/instances/${idInstance}/settings`);
+        xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy
+/getSettings?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
@@ -87,14 +87,14 @@
         };
         xhr.send();
     }
-
 
     function getStateInstance() {
         const idInstance = document.getElementById('idInstance').value;
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `https://api.green-api.com/v3/instances/${idInstance}/state?api_token=${apiTokenInstance}`);
+        xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy
+/getStateInstance?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
@@ -106,44 +106,36 @@
         xhr.send();
     }
 
+    function sendMessage() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+        const recipient = '77771234567'; // номер получателя
+        const message = 'Hello World!'; // текст сообщения
 
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy
+/sendMessage`);
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
-function sendMessage() {
-    const idInstance = document.getElementById('idInstance').value;
-    const apiTokenInstance = document.getElementById('apiTokenInstance').value;
-    const recipient = '77771234567'; // номер получателя
-    const message = 'Hello World!'; // текст сообщения
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+            } else {
+                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+            }
+        };
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', `https://api.green-api.com/v3/instances/${idInstance}/sendMessage`);
-    xhr.setRequestHeader('Authorization', `Bearer ${apiTokenInstance}`);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('User-Agent', 'PostmanRuntime/7.26.8');
-    xhr.setRequestHeader('Accept', '*/*');
-    xhr.setRequestHeader('Cache-Control', 'no-cache');
-    xhr.setRequestHeader('Postman-Token', 'e51b06e9-58b3-4789-a96b-2d6c3fdd042d');
-    xhr.setRequestHeader('Host', 'api.green-api.com');
-    xhr.setRequestHeader('Accept-Encoding', 'gzip, deflate, br');
-    xhr.setRequestHeader('Connection', 'keep-alive');
-    xhr.setRequestHeader('Content-Length', '51');
+        const data = JSON.stringify({
+            idInstance: idInstance,
+            apiTokenInstance: apiTokenInstance,
+            recipient: recipient,
+            message: message
+        });
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            document.getElementById('response').textContent = JSON.stringify(response, null, 2);
-        } else {
-            document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
-        }
-    };
-
-    const data = JSON.stringify({
-        recipient: recipient,
-        message: message
-    });
-
-    xhr.send(data);
-}
+        xhr.send(data);
+    }
 
 </script>
 </body>
-
+</html>
