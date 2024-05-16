@@ -70,71 +70,71 @@
 
     <div class="response" id="response"></div>
 </div>
-
 <script>
-function getSettings() {
-    const idInstance = document.getElementById('idInstance').value;
-    const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+    function getSettings() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `https://api.green-api.com/v3/instances/${idInstance}/settings`);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            document.getElementById('response').textContent = JSON.stringify(response, null, 2);
-        } else {
-            document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
-        }
-    };
-    xhr.send();
-}
-
-
-function getStateInstance() {
-    const idInstance = document.getElementById('idInstance').value;
-    const apiTokenInstance = document.getElementById('apiTokenInstance').value;
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `https://api.green-api.com/v3/instances/${idInstance}/state?api_token=${apiTokenInstance}`);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            document.getElementById('response').textContent = JSON.stringify(response, null, 2);
-        } else {
-            document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
-        }
-    };
-    xhr.send();
-}
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `https://api.green-api.com/v3/instances/${idInstance}/settings`);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+            } else {
+                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+            }
+        };
+        xhr.send();
+    }
 
 
+    function getStateInstance() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
-function sendMessage() {
-    const idInstance = document.getElementById('idInstance').value;
-    const apiTokenInstance = document.getElementById('apiTokenInstance').value;
-    const recipient = '77771234567'; // номер получателя
-    const message = 'Hello World!'; // текст сообщения
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `https://api.green-api.com/v3/instances/${idInstance}/state?api_token=${apiTokenInstance}`);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+            } else {
+                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+            }
+        };
+        xhr.send();
+    }
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', `https://api.green-api.com/v3/instances/${idInstance}/sendMessage`);
-    xhr.setRequestHeader('Authorization', `Bearer ${apiTokenInstance}`);
-    xhr.setRequestHeader('Content-Type', 'application/json');
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            document.getElementById('response').textContent = JSON.stringify(response, null, 2);
-        } else {
-            document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
-        }
-    };
 
-    const data = JSON.stringify({
-        recipient: recipient,
-        message: message
-    });
+    function sendMessage() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+        const recipient = '77771234567'; // номер получателя
+        const message = 'Hello World!'; // текст сообщения
 
-    xhr.send(data);
-}
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://api.green-api.com/v3/instances/${idInstance}/sendMessage`);
+        xhr.setRequestHeader('Authorization', `Bearer ${apiTokenInstance}`);
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
-        
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+            } else {
+                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+            }
+        };
+
+        const data = JSON.stringify({
+            recipient: recipient,
+            message: message
+        });
+
+        xhr.send(data);
+    }
+</script>
+</body>
+
