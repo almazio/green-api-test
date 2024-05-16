@@ -72,22 +72,23 @@
 </div>
 
 <script>
-    function getSettings() {
-        const idInstance = document.getElementById('idInstance').value;
-        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+function getSettings() {
+    const idInstance = document.getElementById('idInstance').value;
+    const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `https://api.green-api.com/v3/instances/<span class="math-inline">\{idInstance\}/settings?api\_token\=</span>{apiTokenInstance}`);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
-            } else {
-                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
-            }
-        };
-        xhr.send();
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `https://api.green-api.com/v3/instances/${idInstance}/settings`);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+        } else {
+            document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+        }
+    };
+    xhr.send();
+}
+
 
     function getStateInstance() {
         const idInstance = document.getElementById('idInstance').value;
