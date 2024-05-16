@@ -71,9 +71,36 @@
 
         <button class="button" onclick="getSettings()">getSettings</button>
         <button class="button" onclick="getStateInstance()">getStateInstance</button>
-        <button class="button" onclick="sendMessage()">sendMessage</button>
+
+        
+        <div class="input-group">
+            <label for="phoneNumber">Номер телефона:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber">
+        </div>
+        
+        <div class="input-group">
+            <label for="message">Сообщение:</label>
+            <input type="text" id="message" name="message">
+        </div>
+        
+        
+        <button class="button" onclick="sendMessagePhone()">Отправить сообщение</button>
+
+            <div class="input-group">
+            <label for="phoneUrl">Номер телефоеа:</label>
+            <input type="tel" id="phoneUrl" name="phoneUrl">
+        </div>
+        
+        <div class="input-group">
+            <label for="url">URL:</label>
+            <input type="text" id="url" name="url">
+        </div>
+        
+        <button class="button" onclick="sendMessageUrl()">Отправить ссылку</button>
     </div>
-    <div class="response" id="response"></div>
+    <div class="response" id="response">
+        <label for="idInstance">Ответ:</label>
+    </div>
 </div>
 <script>
     function getSettings() {
