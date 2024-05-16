@@ -59,6 +59,9 @@
             flex: 1; /* Распределение пространства внутри .container */
             overflow-y: auto; /* Добавление вертикальной прокрутки, если контент не помещается */
         }
+        .space {
+            height: 80px;
+        }
     </style>
 </head>
 <body>
@@ -74,8 +77,9 @@
             <input type="text" id="apiTokenInstance" name="apiTokenInstance">
         </div>
 
-        <button class="button" onclick="getSettings()">getSettings</button>
-        <button class="button" onclick="getStateInstance()">getStateInstance</button>
+        <button class="button" onclick="getSettings()">Получить параметры</button>
+        <div class="space"></div>
+        <button class="button" onclick="getStateInstance()">Получить состояние</button>
 
         
         <div class="input-group">
