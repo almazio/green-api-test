@@ -18,7 +18,7 @@
 
         .input-group {
             margin-bottom: 15px;
-            flex: 1; /* Распределение пространства внутри .container */
+            flex: 1;
         }
 
         .input-group label {
@@ -42,11 +42,6 @@
             cursor: pointer;
             width: 80%;
         }
-        .forms{
-            margin-top: 20px;
-            margin-bottom: 20px;
-            margin-left: 20px;  
-        }
 
         .response {
             margin-top: 20px;
@@ -56,9 +51,10 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             white-space: pre-wrap;
-            flex: 1; /* Распределение пространства внутри .container */
-            overflow-y: auto; /* Добавление вертикальной прокрутки, если контент не помещается */
+            flex: 1;
+            overflow-y: auto;
         }
+
         .space {
             height: 20px;
         }
@@ -81,30 +77,30 @@
         <div class="space"></div>
         <button class="button" onclick="getStateInstance()">Получить состояние</button>
         <div class="space"></div>
-        
+
         <div class="input-group">
             <label for="phoneNumber">Номер телефона:</label>
             <input type="tel" id="phoneNumber" name="phoneNumber">
         </div>
-        
+
         <div class="input-group">
             <label for="message">Сообщение:</label>
             <input type="text" id="message" name="message">
         </div>
-        
-        
+
+
         <button class="button" onclick="sendMessagePhone()">Отправить сообщение</button>
         <div class="space"></div>
-            <div class="input-group">
-            <label for="phoneUrl">Номер телефоеа:</label>
+        <div class="input-group">
+            <label for="phoneUrl">Номер телефона:</label>
             <input type="tel" id="phoneUrl" name="phoneUrl">
         </div>
-        
+
         <div class="input-group">
             <label for="url">URL:</label>
             <input type="text" id="url" name="url">
         </div>
-        
+
         <button class="button" onclick="sendMessageUrl()">Отправить ссылку</button>
     </div>
     <div class="response" id="response">
@@ -146,11 +142,11 @@
         xhr.send();
     }
 
-    function sendMessage() {
+    function sendMessagePhone() {
         const idInstance = document.getElementById('idInstance').value;
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
-        const recipient = '77771234567'; // номер получателя
-        const message = 'Hello World!'; // текст сообщения
+        const recipient = document.getElementById('phoneNumber').value;
+        const message = document.getElementById('message').value;
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy/sendMessage?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
@@ -169,6 +165,34 @@
         const data = JSON.stringify({
             recipient: recipient,
             message: message
+        });
+
+        xhr.send(data);
+    }
+
+    function sendMessageUrl() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+        const recipient = document.getElementById('phoneUrl').value;
+        const url = document.getElementById('url').value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy/sendFileByUrl?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', `Bearer ${apiTokenInstance}`);
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+            } else {
+                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+            }
+        };
+
+        const data = JSON.stringify({
+            recipient: recipient,
+            url: url
         });
 
         xhr.send(data);
