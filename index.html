@@ -123,25 +123,10 @@
 
         <button class="button" onclick="sendMessageUrl()">Отправить ссылку</button>
     </div>
-        <div class="response" id="response">
-        <div class="response-header">
-            <h3>История ответов</h3>
-            <button onclick="clearHistory()">Очистить историю</button>
-        </div>
-        <div id="response-history"></div>
-    </div>
+         <h3>Ответы:</h3>
+        <div class="response" id="response"> </div>
 </div>
 <script>
-    let responseHistory = [];
-
-    function updateResponseHistory(response) {
-        responseHistory.unshift(response);
-        document.getElementById('response-history').innerHTML = responseHistory.map( r => `<pre>${JSON.stringify(r, null, 2)}</pre>`).join('');
-    }
-    function clearHistory() {
-        responseHistory = [];
-        document.getElementById('response-history').innerHTML = '';
-    }
     function appendResponse(responseText) {
         const responseContainer = document.getElementById('response');
         const responseItem = document.createElement('div');
@@ -163,7 +148,6 @@
             } else {
                 appendResponse(`Ошибка: ${xhr.statusText}`);
             }
-            updateResponseHistory(response);
         };
         xhr.send();
 
@@ -182,7 +166,6 @@
             } else {
                 appendResponse(`Ошибка: ${xhr.statusText}`);
             }
-            updateResponseHistory(response);
         };
         xhr.send();
     }
@@ -205,7 +188,6 @@
             } else {
                 appendResponse(`Ошибка: ${xhr.statusText}`);
             }
-            updateResponseHistory(response);
         };
 
         const data = JSON.stringify({
@@ -236,7 +218,6 @@
             } else {
                 appendResponse(`Ошибка: ${xhr.statusText}`);
             }
-            updateResponseHistory(response);
         };
 
         const data = JSON.stringify({
