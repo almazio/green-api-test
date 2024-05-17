@@ -113,7 +113,7 @@
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
+        xhr.open('GET', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy/getSettings?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
