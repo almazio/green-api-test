@@ -1,5 +1,6 @@
 # green-api-test
 GREEN-API TEST TASK REPOSITORY
+<img width="800" alt="green-api-test-almaz" src="https://github.com/almazio/green-api-test/assets/44086148/4c2b3004-0547-4b0b-a985-1181732fc113">
 
 Этот проект создан в рамках тестового задания для работы с API Green, позволяющего взаимодействовать с WhatsApp через API.
 
