@@ -174,7 +174,7 @@ function sendMessagePhone() {
     function sendMessageUrl() {
         const idInstance = document.getElementById('idInstance').value;
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
-        const recipient = document.getElementById('phoneUrl').value;
+        const chatId = document.getElementById('phoneUrl').value + '@c.us';
         const url = document.getElementById('url').value;
 
         const xhr = new XMLHttpRequest();
@@ -192,7 +192,7 @@ function sendMessagePhone() {
         };
 
         const data = JSON.stringify({
-            recipient: recipient,
+            chatId: chatId,
             url: url
         });
 
