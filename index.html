@@ -95,7 +95,10 @@
             <label for="phoneUrl">Номер телефона:</label>
             <input type="tel" id="phoneUrl" name="phoneUrl">
         </div>
-
+         <div class="input-group">
+            <label for="fileName">Имя файла:</label>
+            <input type="text" id="fileName" name="fileName">
+        </div>
         <div class="input-group">
             <label for="url">URL:</label>
             <input type="text" id="url" name="url">
@@ -176,6 +179,7 @@ function sendMessagePhone() {
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
         const chatId = document.getElementById('phoneUrl').value + '@c.us';
         const url = document.getElementById('url').value;
+        const fileName = document.getElementById('fileName').value;
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy/sendFileByUrl?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
@@ -193,7 +197,8 @@ function sendMessagePhone() {
 
         const data = JSON.stringify({
             chatId: chatId,
-            url: url
+            url: url,
+            fileName: fileName
         });
 
         xhr.send(data);
