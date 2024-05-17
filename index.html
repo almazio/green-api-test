@@ -16,9 +16,13 @@
             height: 80vh;
         }
 
-        .input-group {
-            margin-bottom: 15px;
+        .forms {
             flex: 1;
+            padding: 0 2rem; /* Добавлен отступ слева */
+        }
+
+        .input-group, .button {
+            margin-bottom: 15px;
         }
 
         .input-group label {
@@ -55,6 +59,14 @@
             overflow-y: auto;
         }
 
+        .response-item {
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+
         .space {
             height: 20px;
         }
@@ -62,7 +74,7 @@
 </head>
 <body>
 <div class="container">
-    <div style="flex: 1;" class="forms">
+    <div class="forms">
         <div class="input-group">
             <label for="idInstance">Идентификатор:</label>
             <input type="text" id="idInstance" name="idInstance">
@@ -81,6 +93,10 @@
         <div class="input-group">
             <label for="phoneNumber">Номер телефона:</label>
             <input type="tel" id="phoneNumber" name="phoneNumber">
+            <select id="chatType">
+                    <option value="@c.us" selected>@c.us</option>
+                    <option value="@g.us">@g.us</option>
+            </select>
         </div>
 
         <div class="input-group">
@@ -111,6 +127,14 @@
     </div>
 </div>
 <script>
+    function appendResponse(responseText) {
+        const responseContainer = document.getElementById('response');
+        const responseItem = document.createElement('div');
+        responseItem.classList.add('response-item');
+        responseItem.textContent = responseText;
+        responseContainer.appendChild(responseItem);
+    }
+
     function getSettings() {
         const idInstance = document.getElementById('idInstance').value;
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
@@ -120,9 +144,9 @@
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
-                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+                appendResponse(JSON.stringify(response, null, 2));
             } else {
-                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+                appendResponse(`Ошибка: ${xhr.statusText}`);
             }
         };
         xhr.send();
@@ -137,47 +161,47 @@
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
-                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+                appendResponse(JSON.stringify(response, null, 2));
             } else {
-                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+                appendResponse(`Ошибка: ${xhr.statusText}`);
             }
         };
         xhr.send();
     }
 
-function sendMessagePhone() {
-    const idInstance = document.getElementById('idInstance').value;
-    const apiTokenInstance = document.getElementById('apiTokenInstance').value;
-    const chatId = document.getElementById('phoneNumber').value + '@c.us';
-    const message = document.getElementById('message').value;
+    function sendMessagePhone() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+        const chatId = document.getElementById('phoneNumber').value + document.getElementById('chatType').value;
+        const message = document.getElementById('message').value;
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy/sendMessage?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Authorization', `Bearer ${apiTokenInstance}`);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://us-central1-green-api-proxy.cloudfunctions.net/greenApiProxy/sendMessage?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', `Bearer ${apiTokenInstance}`);
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            document.getElementById('response').textContent = JSON.stringify(response, null, 2);
-        } else {
-            document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
-        }
-    };
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                appendResponse(JSON.stringify(response, null, 2));
+            } else {
+                appendResponse(`Ошибка: ${xhr.statusText}`);
+            }
+        };
 
-    const data = JSON.stringify({
-        chatId: chatId,
-        message: message
-    });
+        const data = JSON.stringify({
+            chatId: chatId,
+            message: message
+        });
 
-    xhr.send(data);
-}
+        xhr.send(data);
+    }
 
 
     function sendMessageUrl() {
         const idInstance = document.getElementById('idInstance').value;
         const apiTokenInstance = document.getElementById('apiTokenInstance').value;
-        const chatId = document.getElementById('phoneUrl').value + '@c.us';
+        const chatId = document.getElementById('phoneUrl').value + document.getElementById('chatType').value;
         const url = document.getElementById('url').value;
         const fileName = document.getElementById('fileName').value;
 
@@ -189,9 +213,9 @@ function sendMessagePhone() {
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
-                document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+                appendResponse(JSON.stringify(response, null, 2));
             } else {
-                document.getElementById('response').textContent = `Ошибка: ${xhr.statusText}`;
+                appendResponse(`Ошибка: ${xhr.statusText}`);
             }
         };
 
